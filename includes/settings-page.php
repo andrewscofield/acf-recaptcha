@@ -106,19 +106,33 @@ add_filter('plugin_action_links_advanced-custom-fields-recaptcha-field/acf-recap
 
 function site_key_render()
 {
-    $options = (array) get_option('acf_recaptcha');
+    if(defined('RECAPTCHA_KEY')) {
     ?>
-    <input type="text" class="regular-text code" name="acf_recaptcha[site_key]" value="<?php echo $options['site_key']; ?>">
+        <input type="text" class="regular-text code" name="acf_recaptcha[site_key]" disabled value="DEFINED IN WP-CONFIG.PHP">
     <?php
+    }
+    else {
+        $options = (array) get_option('acf_recaptcha');
+    ?>
+        <input type="text" class="regular-text code" name="acf_recaptcha[site_key]" value="<?php echo $options['site_key']; ?>">
+    <?php
+    }
 }
 
 
 function secret_key_render()
 {
-    $options = (array) get_option('acf_recaptcha');
+    if(defined('RECAPTCHA_KEY')) {
     ?>
-    <input type="text" class="regular-text code" name="acf_recaptcha[secret_key]" value="<?php echo $options['secret_key']; ?>">
+        <input type="text" class="regular-text code" name="acf_recaptcha[secret_key]" disabled value="DEFINED IN WP-CONFIG.PHP">
     <?php
+    }
+    else {
+        $options = (array) get_option('acf_recaptcha');
+    ?>
+        <input type="text" class="regular-text code" name="acf_recaptcha[secret_key]" value="<?php echo $options['secret_key']; ?>">
+    <?php
+    }
 }
 
 
@@ -168,7 +182,11 @@ function acf_recaptcha_options_page()
             </p>
             <?php settings_fields('acf_recaptcha_settings'); ?>
             <?php do_settings_sections('acf_recaptcha_settings'); ?>
-            <?php submit_button(); ?>
+            <?php 
+            if(!defined('RECAPTCHA_KEY') && !defined('RECAPTCHA_SECRET')) {
+                submit_button(); 
+            }    
+            ?>
         </form>
     </div>
     <?php
