@@ -144,10 +144,10 @@ class acf_field_recaptcha extends acf_field {
         $site_key = $field['site_key'];
         $secret_key = $field['secret_key'];
 
-        // Fall back on keys from settings.
+        // Fall back on keys from settings or wp-config constants.
         if (empty($site_key) || empty($secret_key)) {
-            $site_key = $this->settings['site_key'];
-            $secret_key = $this->settings['secret_key'];
+            $site_key = (defined('RECAPTCHA_KEY')) ? RECAPTCHA_KEY : $this->settings['site_key'];
+            $secret_key = (defined('RECAPTCHA_SECRET')) ? RECAPTCHA_SECRET : $this->settings['secret_key'];
         }
 
         // If we don't have both keys, then show an error message.
