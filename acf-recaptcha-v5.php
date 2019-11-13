@@ -464,4 +464,7 @@ class acf_field_recaptcha extends acf_field {
 
 }
 
-new acf_field_recaptcha();
+// Don't run on the network admin
+if(!is_network_admin()) {
+    new acf_field_recaptcha();
+}
