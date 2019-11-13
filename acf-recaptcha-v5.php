@@ -77,7 +77,7 @@ class acf_field_recaptcha extends acf_field {
                 '<br>' .
                 sprintf(__('If left blank, the %s will be used.', 'acf-recaptcha'), $default_keys_link),
             'name' => 'site_key',
-            'required' => (empty($this->settings['site_key']) || !defined(RECAPTCHA_KEY)),
+            'required' => (empty($this->settings['site_key']) || !defined('RECAPTCHA_KEY')),
             'class' => 'code',
         ));
 
@@ -88,7 +88,7 @@ class acf_field_recaptcha extends acf_field {
                 '<br>' .
                 sprintf(__('If left blank, the %s will be used.', 'acf-recaptcha'), $default_keys_link),
             'name' => 'secret_key',
-            'required' => empty($this->settings['secret_key'] || !defined(RECAPTCHA_SECRET)),
+            'required' => empty($this->settings['secret_key'] || !defined('RECAPTCHA_SECRET')),
             'class' => 'code',
         ));
 
