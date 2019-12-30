@@ -63,6 +63,9 @@ class acf_field_recaptcha extends acf_field {
 
         $default_keys_link = sprintf('<a href="%s">%s</a>', admin_url('/edit.php?post_type=acf-field-group&page=acf-recaptcha'), __('default keys'));
 
+        $key_required = (empty($this->settings['site_key']) && (defined('RECAPTCHA_KEY') === false)) ? true : false;
+        $secret_required = (empty($this->settings['site_secret']) && (defined('RECAPTCHA_SECRET') === false)) ? true : false;
+
         acf_render_field_setting($field, array(
             'label' => __('Notice', 'acf-recaptcha'),
             'message' => render_field_message(),
@@ -77,7 +80,7 @@ class acf_field_recaptcha extends acf_field {
                 '<br>' .
                 sprintf(__('If left blank, the %s will be used.', 'acf-recaptcha'), $default_keys_link),
             'name' => 'site_key',
-            'required' => (empty($this->settings['site_key']) || !defined('RECAPTCHA_KEY')),
+            'required' => $key_required,
             'class' => 'code',
         ));
 
@@ -88,7 +91,7 @@ class acf_field_recaptcha extends acf_field {
                 '<br>' .
                 sprintf(__('If left blank, the %s will be used.', 'acf-recaptcha'), $default_keys_link),
             'name' => 'secret_key',
-            'required' => empty($this->settings['secret_key'] || !defined('RECAPTCHA_SECRET')),
+            'required' => $secret_required,
             'class' => 'code',
         ));
 
