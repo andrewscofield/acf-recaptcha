@@ -11,8 +11,26 @@ class acf_field_recaptcha extends acf_field {
 
     function __construct() {
         $settings = (array) get_option('acf_recaptcha');
-        $this->settings['site_key'] = isset($settings['site_key']) ? $settings['site_key'] : null;
-        $this->settings['secret_key'] = isset($settings['secret_key']) ? $settings['secret_key'] : null;
+
+        if(defined('RECAPTCHA_KEY')) {
+            $this->settings['site_key'] = RECAPTCHA_KEY;
+        }
+        elseif (isset($settings['site_key'])) {
+            $this->settings['site_key'] = $settings['site_key'];
+        }
+        else {
+            $this->settings['site_key'] = null;
+        }
+
+        if(defined('RECAPTCHA_SECRET')) {
+            $this->settings['secret_key'] = RECAPTCHA_SECRET;
+        }
+        elseif (isset($settings['secret_key'])) {
+            $this->settings['secret_key'] = $settings['secret_key'];
+        }
+        else {
+            $this->settings['secret_key'] = null;
+        }
 
         /**
          * Unique identifier for the field type.
